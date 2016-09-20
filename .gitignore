@@ -83,3 +83,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+config/minecraft.js
+config/slack.js
+output-log.txt
+error-log.txt
+debug-log.txt
