@@ -1,5 +1,5 @@
 var EventEmitter = require('events');
-var log          = require('../logger/logger.js');
+var log          = require('frozor-logger');
 
 var mc_color_to_chalk = {
     4: log.chalk.red,

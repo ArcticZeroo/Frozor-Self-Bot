@@ -1,5 +1,5 @@
 /* General Requirements */
-var log            = require('./logger/logger.js');
+var log            = require('frozor-logger');
 var package        = require('./package.json');
 var fs             = require('fs');
 
@@ -8,10 +8,10 @@ var config         = require('./config/all.js');
 
 /* Slack Requirements */
 var slack_token    = config.slack.tokens.frozor;
-var slackAPI       = require('./api/slack.js');
+var slackAPI       = require('frozor-slack');
 var slackBot       = slackAPI.createBot(slack_token);
-var slackUtils     = require('./api/utils.js').getUtils(slackBot);
-var slackCommands  = require('./commands/slack.js')(log);
+var slackUtils     = slackAPI.utils.getUtils(slackBot);
+var slackCommands  = require('./commands/slack.js');
 
 /* Minecraft Requirements */
 var MinecraftBot   = require('./minecraft/MinecraftBot');

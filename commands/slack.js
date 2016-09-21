@@ -1,7 +1,7 @@
 var CommandUtil = require('./CommandUtil');
 var Punishment  = require('../objects/Punish/Punishment');
 var Error       = require('../objects/Error');
-var log;
+var log         = require('frozor-logger');
 
 var commands = {
     exit:{
@@ -57,7 +57,4 @@ var commands = {
 
 }
 
-module.exports = function(logger){
-    log = logger;
-    return new CommandUtil(commands);
-}
+module.exports = new CommandUtil(commands);
