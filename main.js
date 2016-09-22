@@ -7,7 +7,7 @@ var fs             = require('fs');
 var config         = require('./config/all.js');
 
 /* Slack Requirements */
-var slack_token    = config.slack.tokens.frozor;
+const slack_token  = config.slack.tokens.frozor;
 var slackAPI       = require('frozor-slack');
 var slackBot       = slackAPI.createBot(slack_token);
 var slackUtils     = slackAPI.utils.getUtils(slackBot);

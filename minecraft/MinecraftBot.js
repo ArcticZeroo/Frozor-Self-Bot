@@ -34,7 +34,7 @@ class MinecraftBot extends EventEmitter{
         super();
         this.self     = this;
         this._mf      = mineflayer;
-        this._bot      = null;
+        this._bot     = null;
         this.host     = host;
         this.port     = port;
         this.username = username;
@@ -67,21 +67,25 @@ class MinecraftBot extends EventEmitter{
         this.registerEvents();
     }
 
+    getBot(){
+        return this._bot;
+    }
+
     registerEvents(){
-        this._bot.on('login', ()=>{
+        this.getBot().on('login', ()=>{
             log.logInfo(`Logged into ${log.chalk.cyan(this.host)} as ${log.chalk.cyan(this._bot.username)}`);
         });
 
-        this._bot.on('message', (packet)=>{
+        this.getBot().on('message', (packet)=>{
             var message = packet.toString().replace('  ', ' ');
 
-            var coloredMessage = this.consoleColorChat(message);
+            var coloredMessage = this.consoleColorChat(message, packet);
 
             if(coloredMessage == log.chalk.stripColor(coloredMessage)) log.logDebug(JSON.stringify(packet));
 
             log.logInfo(coloredMessage, "CHAT");
 
-            this.self.emit('chat', message.replace(new RegExp('/(\u00A7[A-z0-9])/g'), ''));
+            this.self.emit('chat', message.replace(new RegExp('/(\u00A7[A-fK-oRr1-9])/g'), ''));
         });
 
     }
@@ -94,8 +98,17 @@ class MinecraftBot extends EventEmitter{
 
     }
 
-    consoleColorChat(chat){
+    consoleColorChat(chat, packet){
         var split = chat.split(`§`);
+
+        if(split.length == 1){
+            var extra = packet.json.extra;
+            for(var item of extra){
+
+            }
+            return;
+        }
+
         var coloredMessage = "";
         for(var index in split){
             var message = split[index];
@@ -125,7 +138,7 @@ class MinecraftBot extends EventEmitter{
      * @param message - The message to send in chat.
      */
     chat(message){
-        this._bot.chat(message);
+        this.getBot().chat(message);
     }
 
     /**
@@ -159,9 +172,9 @@ class MinecraftBot extends EventEmitter{
     }
 
     end(){
-        if(!this._bot) return;
-        this._bot.quit();
-        this._bot.end();
+        if(!this.getBot()) return;
+        this.getBot().quit();
+        this.getBot().end();
     }
 }
 
