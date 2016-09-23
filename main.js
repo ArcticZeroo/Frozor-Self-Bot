@@ -7,8 +7,16 @@ var fs             = require('fs');
 var config         = require('./config/all.js');
 
 /* Slack Requirements */
+<<<<<<< HEAD
 var slack_token    = config.slack.tokens.frozor;
 var SlackBot       = require('./slack/SlackBot');
+=======
+const slack_token  = config.slack.tokens.frozor;
+var slackAPI       = require('frozor-slack');
+var slackBot       = slackAPI.createBot(slack_token);
+var slackUtils     = slackAPI.utils.getUtils(slackBot);
+var slackCommands  = require('./commands/slack.js');
+>>>>>>> fe729ec003edd3fce8f75abd4db79669e7b1c2ef
 
 /* Minecraft Requirements */
 var MinecraftBot   = require('./minecraft/MinecraftBot');
