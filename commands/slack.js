@@ -11,7 +11,7 @@ var commands = {
             max: 0
         },
         process: (slackBot, slackUtils, command, minecraftBot)=>{
-            log.logInfo(`Exiting Self-Bot due to ${log.chalk.cyan('exit')} Slack command...`);
+            log.info(`Exiting Self-Bot due to ${log.chalk.cyan('exit')} Slack command...`);
             minecraftBot.end();
             slackUtils.chat.postMessage(command.getChannel(), `${command.getUser().getMention()} Goodbye!`, ()=>{
                 process.exit();
