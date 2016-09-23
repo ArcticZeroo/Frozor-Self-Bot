@@ -8,10 +8,7 @@ var config         = require('./config/all.js');
 
 /* Slack Requirements */
 var slack_token    = config.slack.tokens.frozor;
-var slackAPI       = require('frozor-slack');
-var slackBot       = slackAPI.createBot(slack_token);
-var slackUtils     = slackAPI.utils.getUtils(slackBot);
-var slackCommands  = require('./commands/slack.js');
+var SlackBot       = require('./slack/SlackBot');
 
 /* Minecraft Requirements */
 var MinecraftBot   = require('./minecraft/MinecraftBot');
@@ -23,6 +20,7 @@ var CommandMessage = require('./objects/CommandMessage.js').slack;
 log.logInfo(`${log.chalk.cyan(package.name)} version ${log.chalk.cyan(package.version)} active!`);
 
 var selfBot        = new MinecraftBot(mf, config.minecraft.login.host, config.minecraft.login.port, config.minecraft.login.username, config.minecraft.login.password);
+var slackBot       = new SlackBot(slack_token, selfBot);
 
 if(config.minecraft.TIME_LIMIT){
     setTimeout(()=>{
@@ -32,56 +30,16 @@ if(config.minecraft.TIME_LIMIT){
     }, config.minecraft.MAX_TIME*1000);
 }
 
-function startSlackBot(){
-    slackBot.auth.test({},(response)=>{
-        if(response.ok){
-            log.logInfo("Successfully authenticated with Slack API!", "startSlackBot()");
-            slackBot.rtm.start();
-            registerEvents();
-        }else{
-            log.logError("Error starting slack _bot: " + response.error, "startSlackBot()");
-        }
-    });
-}
-
 function startBots(){
-    startSlackBot();
+    slackBot.initialize();
     selfBot.initialize();
+    registerEvents();
 }
 
 function registerEvents(){
-    slackBot.on('hello', ()=>{
-        log.logInfo(`Connected to RTM at ${log.chalk.magenta(slackBot.info.getTeamName())} as ${log.chalk.magenta(`${slackBot.info.getUserName()}@${slackBot.info.getUserID()}`)}`);
-    });
-
-    slackBot.on('message', (message)=>{
-        //Sets a 'mention' property for the message object.
-        message.mention = slackUtils.getUserMention(message.user);
-
-        // Ensures that the _bot is not the one sending the message
-        if(message.user == slackBot.info.getUserID()) return;
-
-        // Checks to see if the message begins with _bot mention (which is command prefix)
-        if(message.text.startsWith(slackBot.info.getUserMention())) slackBot.emit('command', message);
-    });
-
-    slackBot.on('command', (message)=>{
-        var commandMessage = new CommandMessage(message);
-        var command        = slackCommands.get(commandMessage.getName());
-
-        if(!command) return;
-
-        if(command.isAlias()) command = slackCommands.get(command.getAliasName());
-
-        if(commandMessage.getArgs().length > command.getMax()) return slackUtils.chat.postMessage(commandMessage.getChannel(), `${commandMessage.getUser().getMention()} Too many arguments!`);
-        if(commandMessage.getArgs().length < command.getMin()) return slackUtils.chat.postMessage(commandMessage.getChannel(), `${commandMessage.getUser().getMention()} Not enough arguments!`);
-
-        command.getProcess()(selfBot, slackUtils, commandMessage);
-    });
-
     selfBot.on('chat', (message)=>{
-        slackUtils.chat.postMessage('chat', message);
-    })
+        slackBot.chat('chat', message);
+    });
 }
 
 startBots();

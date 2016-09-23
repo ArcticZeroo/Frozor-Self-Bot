@@ -10,7 +10,7 @@ var commands = {
             min: 0,
             max: 0
         },
-        process: (minecraftBot, slackUtils, command)=>{
+        process: (slackBot, slackUtils, command, minecraftBot)=>{
             log.logInfo(`Exiting Self-Bot due to ${log.chalk.cyan('exit')} Slack command...`);
             minecraftBot.end();
             slackUtils.chat.postMessage(command.getChannel(), `${command.getUser().getMention()} Goodbye!`, ()=>{
@@ -24,7 +24,7 @@ var commands = {
             min: 1,
             max: 100
         },
-        process: (minecraftBot, slackUtils, command)=>{
+        process: (slackBot, slackUtils, command, minecraftBot)=>{
             minecraftBot.queueMessage(command.getArgs().join(' '));
         }
     },
@@ -34,7 +34,7 @@ var commands = {
             min: 4,
             max: 100
         },
-        process: (minecraftBot, slackUtils, command)=>{
+        process: (slackBot, slackUtils, command, minecraftBot)=>{
             var user       = command.getArg(0);
             var type       = command.getArg(1).toUpperCase();
             var severity   = command.getArg(2);

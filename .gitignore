@@ -86,3 +86,4 @@ $RECYCLE.BIN/
 config/minecraft.js
 config/slack.js
 .idea/
+.idea/workspace.xml
