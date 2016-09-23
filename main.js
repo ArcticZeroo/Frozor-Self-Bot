@@ -22,14 +22,14 @@ var mf             = require('mineflayer');
 /* Custom Class Requirements */
 var CommandMessage = require('./objects/CommandMessage.js').slack;
 
-log.logInfo(`${log.chalk.cyan(package.name)} version ${log.chalk.cyan(package.version)} active!`);
+log.info(`${log.chalk.cyan(package.name)} version ${log.chalk.cyan(package.version)} active!`);
 
 var selfBot        = new MinecraftBot(mf, config.minecraft.login.host, config.minecraft.login.port, config.minecraft.login.username, config.minecraft.login.password);
 var slackBot       = new SlackBot(slack_token, selfBot);
 
 if(config.minecraft.TIME_LIMIT){
     setTimeout(()=>{
-        log.logInfo(`${config.minecraft.MAX_TIME} seconds have elapsed, exiting process!`);
+        log.info(`${config.minecraft.MAX_TIME} seconds have elapsed, exiting process!`);
         selfBot.end();
         process.exit(0);
     }, config.minecraft.MAX_TIME*1000);
