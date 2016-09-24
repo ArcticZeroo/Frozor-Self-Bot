@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d031486-0687-406a-ab30-bee89bbd3d6d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.js" afterPath="$PROJECT_DIR$/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minecraft/MinecraftBot.js" afterPath="$PROJECT_DIR$/minecraft/MinecraftBot.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/slack/SlackBot.js" afterPath="$PROJECT_DIR$/slack/SlackBot.js" />
     </list>
     <ignored path="self-bot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="43" column="101" selection-start-line="43" selection-start-column="101" selection-end-line="43" selection-end-column="101" />
+            <state relative-caret-position="198">
+              <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -50,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SlackBot.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SlackBot.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/slack/SlackBot.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1254">
@@ -176,9 +173,9 @@
         <option value="$PROJECT_DIR$/objects/User.js" />
         <option value="$PROJECT_DIR$/objects/SlackMessage.js" />
         <option value="$PROJECT_DIR$/commands/slack.js" />
-        <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/minecraft/MinecraftBot.js" />
         <option value="$PROJECT_DIR$/slack/SlackBot.js" />
+        <option value="$PROJECT_DIR$/main.js" />
       </list>
     </option>
   </component>
@@ -808,12 +805,12 @@
       <option name="presentableId" value="Default" />
       <updated>1474076980879</updated>
       <workItem from="1474546768106" duration="6871000" />
-      <workItem from="1474686608012" duration="910000" />
+      <workItem from="1474686608012" duration="1258000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7781000" />
+    <option name="totallyTimeSpent" value="8129000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1932" height="1038" extended-state="0" />
@@ -1115,16 +1112,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="43" column="101" selection-start-line="43" selection-start-column="101" selection-end-line="43" selection-end-column="101" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/minecraft/MinecraftBot.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1140,6 +1127,16 @@
         <state relative-caret-position="1254">
           <caret line="57" column="207" selection-start-line="57" selection-start-column="207" selection-end-line="57" selection-end-column="207" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
