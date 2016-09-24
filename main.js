@@ -27,14 +27,6 @@ log.info(`${log.chalk.cyan(package.name)} version ${log.chalk.cyan(package.versi
 var selfBot        = new MinecraftBot(mf, config.minecraft.login.host, config.minecraft.login.port, config.minecraft.login.username, config.minecraft.login.password);
 var slackBot       = new SlackBot(slack_token, selfBot);
 
-if(config.minecraft.TIME_LIMIT){
-    setTimeout(()=>{
-        log.info(`${config.minecraft.MAX_TIME} seconds have elapsed, exiting process!`);
-        selfBot.end();
-        process.exit(0);
-    }, config.minecraft.MAX_TIME*1000);
-}
-
 function startBots(){
     slackBot.initialize();
     selfBot.initialize();
@@ -44,6 +36,16 @@ function startBots(){
 function registerEvents(){
     selfBot.on('chat', (message)=>{
         slackBot.chat('chat', message);
+    });
+
+    selfBot.on('login', ()=>{
+        if(config.minecraft.TIME_LIMIT){
+            setTimeout(()=>{
+                log.info(`${config.minecraft.MAX_TIME} seconds have elapsed, exiting process!`, 'SELF');
+                selfBot.end();
+                process.exit(0);
+            }, config.minecraft.MAX_TIME*1000);
+        }
     });
 }
 

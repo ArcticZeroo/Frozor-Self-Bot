@@ -54,7 +54,7 @@ class MinecraftBot extends EventEmitter{
     }
 
     initialize(){
-        log.logInfo(`Logging into ${log.chalk.cyan(this.host)}...`);
+        log.logInfo(`Logging into ${log.chalk.cyan(this.host)}...`, 'SELF');
         
         this._bot = this._mf.createBot({
             host    : this.host,
@@ -73,7 +73,8 @@ class MinecraftBot extends EventEmitter{
 
     registerEvents(){
         this.getBot().on('login', ()=>{
-            log.logInfo(`Logged into ${log.chalk.cyan(this.host)} as ${log.chalk.cyan(this._bot.username)}`);
+            log.logInfo(`Logged into ${log.chalk.cyan(this.host)} as ${log.chalk.cyan(this._bot.username)}`, "SELF");
+            this.emit('login');
         });
 
         this.getBot().on('message', (packet)=>{
@@ -81,9 +82,9 @@ class MinecraftBot extends EventEmitter{
 
             var coloredMessage = this.consoleColorChat(message, packet);
 
-            if(coloredMessage == log.chalk.stripColor(coloredMessage)) log.logDebug(JSON.stringify(packet));
+            if(coloredMessage == log.chalk.stripColor(coloredMessage)) log.logDebug(JSON.stringify(packet), 'SELF');
 
-            log.logInfo(coloredMessage, "CHAT");
+            log.logInfo(coloredMessage, "SELF|CHAT");
 
             this.self.emit('chat', message.replace(new RegExp('/(\u00A7[A-fK-oRr1-9])/g'), ''));
         });

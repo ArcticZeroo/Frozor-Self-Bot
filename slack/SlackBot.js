@@ -20,8 +20,8 @@ class SlackBot extends EventEmitter{
         this._utils = slackAPI.utils.getUtils(this._bot);
 
         this._bot.auth.test({}, (response)=>{
-           if(response.ok) log.info(`Successfully authenticated with the Slack API!`);
-            else log.error(`Unable to authenticate with Slack API: ${response.error}`);
+           if(response.ok) log.info(`Successfully authenticated with the Slack API!`, 'SELF');
+            else log.error(`Unable to authenticate with Slack API: ${response.error}`, 'SELF');
         });
 
         this.registerEvents();
@@ -31,7 +31,7 @@ class SlackBot extends EventEmitter{
         var emitter = this.getBot();
 
         emitter.on('hello', ()=>{
-            log.info(`Connected to RTM at ${log.chalk.magenta(this.getBot().info.getTeamName())} as ${log.chalk.magenta(`${this.getBot().info.getUserName()}@${this.getBot().info.getUserID()}`)}`);
+            log.info(`Connected to RTM at ${log.chalk.magenta(this.getBot().info.getTeamName())} as ${log.chalk.magenta(`${this.getBot().info.getUserName()}@${this.getBot().info.getUserID()}`)}`, 'SELF');
         });
 
         emitter.on('message', (message)=>{
@@ -54,8 +54,8 @@ class SlackBot extends EventEmitter{
             if(!command) return;
 
             //Ensures that the command has the correct amount of arguments
-            if(commandMessage.getArgs().length > command.getMax()) return this.getUtils().chat.postMessage(commandMessage.getChannel(), `${commandMessage.getUser().getMention()} Too many arguments!`);
-            if(commandMessage.getArgs().length < command.getMin()) return this.getUtils().chat.postMessage(commandMessage.getChannel(), `${commandMessage.getUser().getMention()} Not enough arguments!`);
+            if(commandMessage.getArgs().length > command.getMax()) return this.getUtils().chat.postMessage(commandMessage.getChannel(), `${commandMessage.getUser().getMention()} Too many arguments!`, 'SELF');
+            if(commandMessage.getArgs().length < command.getMin()) return this.getUtils().chat.postMessage(commandMessage.getChannel(), `${commandMessage.getUser().getMention()} Not enough arguments!`, 'SELF');
 
             //Gets the command process and runs it.
             command.getProcess()(this.getBot(), this.getUtils(), commandMessage, this.getMinecraftBot());
