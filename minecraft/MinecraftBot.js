@@ -32,6 +32,7 @@ class MinecraftBot extends EventEmitter{
      */
     constructor(mineflayer, host, port, username, password){
         super();
+
         this.self     = this;
         this._mf      = mineflayer;
         this._bot     = null;
@@ -53,6 +54,13 @@ class MinecraftBot extends EventEmitter{
 
     }
 
+    /**
+     * Actually starts the bot.
+     * If you want to override
+     * events, do so BEFORE
+     * calling this method.
+     */
+
     initialize(){
         log.logInfo(`Logging into ${log.chalk.cyan(this.host)}...`, 'SELF');
         
@@ -71,6 +79,20 @@ class MinecraftBot extends EventEmitter{
         return this._bot;
     }
 
+    /**
+     * Default behavior for the bot.
+     * If you want to override any
+     * of the bot's events, do so
+     * using the overrideEvents()
+     * method.
+     *
+     * By default, the bot just
+     * logs in, prints all chat
+     * messages to the console
+     * with colors (chalk), and
+     * emits events for login/
+     * chat events.
+     */
     registerEvents(){
         this.getBot().on('login', ()=>{
             log.logInfo(`Logged into ${log.chalk.cyan(this.host)} as ${log.chalk.cyan(this._bot.username)}`, "SELF");
