@@ -1,4 +1,16 @@
-class MessageQueue{
+var EventEmitter = require('events');
+
+/**
+ * @class - This Class queues messages so that the Minecraft Bot isn't hit by Mineplex's
+ * command center, which limits at just below 1 message/second. To do this, this_last stores
+ * the last sent message, and when another message is requested to be sent the two compare
+ * to see if one has been sent in the last second. If so, it is added to this._queue
+ * which is processed at a regular interval. Additionally, if there are messages pending
+ * in the messageQueue, even if it has been more than a second since the last message, the message
+ * will be added to the message messageQueue.
+ */
+
+class MessageQueue extends EventEmitter{
     constructor(auto_start, interval){
         auto_start = auto_start || true;
         interval   = interval   || 1000;
@@ -9,7 +21,7 @@ class MessageQueue{
         this._intervalTime = interval;
         this._interval_handler = ()=> {
             if (this.getQueueLength() > 0) {
-                this.chat(this.getFirstQueueItem());
+                this.emitMessage(this.getFirstQueueItem());
                 this.setLastToNow();
             }
         }
@@ -19,6 +31,10 @@ class MessageQueue{
 
     startInterval(){
         this._interval = setInterval(this._interval_handler, this._intervalTime);
+    }
+
+    stopInterval(){
+        clearInterval(this._interval);
     }
 
     getLast(){
@@ -32,7 +48,7 @@ class MessageQueue{
     /**
      * This method will REMOVE
      * the first item in the
-     * queue and return that
+     * messageQueue and return that
      * item.
      */
     getFirstQueueItem(){
@@ -59,9 +75,13 @@ class MessageQueue{
         if (this.getQueueLength().length > 0) return this.addToQueue(message);
 
         if (this.getTimeSinceLast() >= 1) {
-            this.chat(message);
+            this.emitMessage(message);
             this.setLastToNow();
         } else this.addToQueue(message);
+    }
+
+    emitMessage(message){
+        this.emit('message', message);
     }
 }
 

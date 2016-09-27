@@ -1,5 +1,7 @@
-var EventEmitter = require('events');
-var log          = require('frozor-logger');
+const MessageQueue = require('../objects/MessageQueue');
+const EventEmitter = require('events');
+
+var log            = require('frozor-logger');
 
 var mc_color_to_chalk = {
     4: log.chalk.red,
@@ -41,16 +43,8 @@ class MinecraftBot extends EventEmitter{
         this.username = username;
         this.password = password;
 
-        this.message_queue          = [];
-        this.message_queue_last     = 0;
-        setInterval(()=>{
-            var timeNow = Date.now()/1000;
-            if(this.message_queue.length > 0){
-                var messageToSend = this.message_queue.splice(0, 1).toString();
-                this.chat(messageToSend);
-                this.message_queue_last = timeNow;
-            }
-        }, 1000);
+        this.messageQueue    = new MessageQueue();
+        this.messageQueue.on('message', (msg)=>{this.chat(msg);})
 
     }
 
@@ -164,34 +158,12 @@ class MinecraftBot extends EventEmitter{
         this.getBot().chat(message);
     }
 
-    /**
-     * @method - This method queues messages so that the Minecraft Bot isn't hit by Mineplex's
-     * command center, which limits at just below 1 message/second. To do this, the _bot stores
-     * the last sent message, and when another message is requested to be sent the two compare
-     * to see if one has been sent in the last second. If so, it is added to this.message_queue
-     * which is processed at a regular interval. Additionally, if there are messages pending
-     * in the queue, even if it has been more than a second since the last message, the message
-     * will be added to the message queue.
-     *
-     * @param message - The chat message to queue.
-     */
     queueMessage(message){
-        var timeNow = Date.now()/1000;
-        var messageType = typeof message;
-        if(messageType.toLowerCase() != "string") message = message.toString();
-        var last_message_difference = timeNow - this.message_queue_last;
-        if(this.message_queue.length > 0){
-            this.message_queue.push(message);
-        }else if(last_message_difference >= 1){
-            this.chat(message);
-            this.message_queue_last = timeNow;
-        }else{
-            this.message_queue.push(message);
-        }
+        this.messageQueue.queue(message);
     }
 
     getMessageQueue(){
-        return this.message_queue;
+        return this.messageQueue.getQueue();
     }
 
     end(){
