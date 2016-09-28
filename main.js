@@ -4,7 +4,6 @@ var Hybrid         = require('frozor-hybrid');
 /* General Requirements */
 var log            = require('frozor-logger');
 var package        = require('./package.json');
-var Hybrid         = require('../slack-mc-hybrid/');
 var fs             = require('fs');
 
 /* Config Requirements */
