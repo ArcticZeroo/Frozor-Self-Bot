@@ -1,3 +1,6 @@
+/* Require the actual API */
+var Hybrid         = require('frozor-hybrid');
+
 /* General Requirements */
 var log            = require('frozor-logger');
 var package        = require('./package.json');
